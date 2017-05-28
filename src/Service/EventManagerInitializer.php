@@ -17,9 +17,9 @@
 
 namespace Xloit\Bridge\Zend\EventManager\Service;
 
-use Xloit\Bridge\Zend\EventManager\EventManagerAwareInterface;
 use Xloit\Bridge\Zend\ServiceManager\AbstractServiceInitializer;
 use Zend\EventManager\EventManager;
+use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerInterface;
 
 /**
