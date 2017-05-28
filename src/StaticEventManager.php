@@ -35,45 +35,6 @@ class StaticEventManager extends SharedEventManager
     protected static $instance;
 
     /**
-     * Trigger all listeners for a given event.
-     * Can emulate triggerUntil() if the last argument provided is a callback.
-     *
-     * @param string                                   $id
-     * @param string|\Zend\EventManager\EventInterface $event
-     * @param string|mixed                             $target
-     * @param array|\Traversable                       $argv
-     *
-     * @return \Zend\EventManager\ResponseCollection All listener return values
-     */
-    public function trigger($id, $event, $target = null, $argv = [])
-    {
-        /** @var \Zend\EventManager\EventManagerInterface $currentEvent */
-        $currentEvent = $this->getEvent($id);
-
-        if ($currentEvent) {
-            return $currentEvent->trigger($event, $target, $argv);
-        }
-
-        return false;
-    }
-
-    /**
-     * Retrieve event.
-     *
-     * @param string $id
-     *
-     * @return SharedEventManagerInterface
-     */
-    public function getEvent($id)
-    {
-        if (!array_key_exists($id, $this->identifiers)) {
-            return false;
-        }
-
-        return $this->identifiers[$id];
-    }
-
-    /**
      * Retrieve instance.
      *
      * @return SharedEventManagerInterface
@@ -117,5 +78,44 @@ class StaticEventManager extends SharedEventManager
     public static function resetInstance()
     {
         static::$instance = null;
+    }
+
+    /**
+     * Trigger all listeners for a given event.
+     * Can emulate triggerUntil() if the last argument provided is a callback.
+     *
+     * @param string                                   $id
+     * @param string|\Zend\EventManager\EventInterface $event
+     * @param string|mixed                             $target
+     * @param array|\Traversable                       $argv
+     *
+     * @return \Zend\EventManager\ResponseCollection|bool All listener return values or FALSE otherwise.
+     */
+    public function trigger($id, $event, $target = null, $argv = [])
+    {
+        /** @var \Zend\EventManager\EventManagerInterface $currentEvent */
+        $currentEvent = $this->getEvent($id);
+
+        if ($currentEvent) {
+            return $currentEvent->trigger($event, $target, $argv);
+        }
+
+        return false;
+    }
+
+    /**
+     * Retrieve event.
+     *
+     * @param string $id
+     *
+     * @return SharedEventManagerInterface|bool
+     */
+    public function getEvent($id)
+    {
+        if (!array_key_exists($id, $this->identifiers)) {
+            return false;
+        }
+
+        return $this->identifiers[$id];
     }
 }
